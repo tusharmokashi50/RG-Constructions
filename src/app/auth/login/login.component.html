@@ -1,0 +1,58 @@
+<div class="auth-container">
+
+    <div class="auth-box">
+  
+      <h2>Welcome Back</h2>
+  
+      <p class="subtitle">
+        Login to continue
+      </p>
+  
+      <form (ngSubmit)="login()">
+  
+        <!-- EMAIL -->
+        <div class="input-group">
+          <input
+            type="email"
+            placeholder="Email Address"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+          >
+        </div>
+  
+        <!-- PASSWORD -->
+        <div class="input-group">
+          <input
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+          >
+        </div>
+  
+        <!-- BUTTON -->
+        <button
+          type="submit"
+          [disabled]="isLoading"
+        >
+          {{ isLoading ? 'Please wait...' : 'Login' }}
+        </button>
+  
+      </form>
+  
+      <!-- REGISTER -->
+      <div class="bottom-text">
+  
+        Don't have an account?
+  
+        <a routerLink="/register">
+          Register
+        </a>
+  
+      </div>
+  
+    </div>
+  
+  </div>

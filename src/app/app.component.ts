@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
@@ -14,7 +14,16 @@ export class AppComponent {
 
   isFabOpen = false;
 
-toggleFab() {
-  this.isFabOpen = !this.isFabOpen;
-}
+  constructor(private router: Router) {}
+
+  toggleFab() {
+    this.isFabOpen = !this.isFabOpen;
+  }
+
+  isAuthPage(): boolean {
+
+    return this.router.url === '/login'
+        || this.router.url === '/register';
+
+  }
 }
