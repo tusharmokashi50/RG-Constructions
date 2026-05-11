@@ -1,0 +1,87 @@
+<div class="admin-login-container">
+
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+
+    <!-- Admin Icon -->
+    <div class="admin-icon">
+      <div class="icon-ring">
+        <i class="bi bi-shield-lock-fill"></i>
+      </div>
+    </div>
+
+    <h2>Admin Portal</h2>
+    <p class="subtitle">RG Construction Management</p>
+
+    <form (ngSubmit)="adminLogin()">
+
+      <!-- Email -->
+      <div class="input-wrapper">
+        <i class="bi bi-envelope-fill input-icon"></i>
+        <input
+          type="email"
+          placeholder="Admin Email"
+          [(ngModel)]="credentials.email"
+          name="email"
+          required
+          autocomplete="email"
+          id="admin-email-input"
+        >
+      </div>
+
+      <!-- Password -->
+      <div class="input-wrapper">
+        <i class="bi bi-key-fill input-icon"></i>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+          autocomplete="current-password"
+          id="admin-password-input"
+        >
+        <button
+          type="button"
+          class="toggle-password"
+          (click)="togglePassword()"
+          id="toggle-password-btn"
+        >
+          <i [class]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+        </button>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="btn-admin-login"
+        [disabled]="isLoading"
+        id="admin-login-btn"
+      >
+        <span *ngIf="!isLoading">
+          <i class="bi bi-box-arrow-in-right"></i>
+          Sign In
+        </span>
+        <span *ngIf="isLoading" class="loader-wrapper">
+          <span class="spinner"></span>
+          Authenticating...
+        </span>
+      </button>
+
+    </form>
+
+    <div class="footer-note">
+      <i class="bi bi-lock-fill"></i>
+      Authorized personnel only
+    </div>
+
+  </div>
+
+</div>

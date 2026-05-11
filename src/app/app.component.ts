@@ -23,7 +23,10 @@ export class AppComponent {
   isAuthPage(): boolean {
 
     return this.router.url === '/login'
-        || this.router.url === '/register';
+        || this.router.url === '/register'
+        || this.router.url === '/admin-login'
+        || this.router.url === '/admin'
+        || this.router.url === '/admin-users';
 
   }
 }

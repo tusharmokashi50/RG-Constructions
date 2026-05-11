@@ -1,0 +1,322 @@
+/* ═══════════════════════════════════════════
+   ADMIN LOGIN — PREMIUM DARK THEME
+   ═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── CONTAINER ── */
+.admin-login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0a0a1a;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* ── ANIMATED BACKGROUND ── */
+.bg-animation {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: floatBg 8s ease-in-out infinite;
+}
+
+.bg-circle.c1 {
+  width: 400px; height: 400px;
+  background: #d32f2f;
+  top: -100px; left: -100px;
+  animation-delay: 0s;
+}
+
+.bg-circle.c2 {
+  width: 350px; height: 350px;
+  background: #ff6f00;
+  bottom: -80px; right: -80px;
+  animation-delay: 2s;
+}
+
+.bg-circle.c3 {
+  width: 250px; height: 250px;
+  background: #9c27b0;
+  top: 40%; left: 60%;
+  animation-delay: 4s;
+}
+
+@keyframes floatBg {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ── LOGIN CARD ── */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 24px;
+  padding: 48px 36px 36px;
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+
+  animation: cardSlideUp 0.6s ease-out;
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── ADMIN ICON ── */
+.admin-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.icon-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #d32f2f, #ff6f00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 30px rgba(211, 47, 47, 0.4),
+    0 0 60px rgba(211, 47, 47, 0.15);
+
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.icon-ring i {
+  font-size: 36px;
+  color: #fff;
+}
+
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(211, 47, 47, 0.4), 0 0 60px rgba(211, 47, 47, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(211, 47, 47, 0.6), 0 0 80px rgba(211, 47, 47, 0.25); }
+}
+
+/* ── TYPOGRAPHY ── */
+.login-card h2 {
+  text-align: center;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.login-card .subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 36px;
+  letter-spacing: 0.5px;
+}
+
+/* ── INPUTS ── */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  transition: color 0.3s;
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 16px 48px 16px 48px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.input-wrapper input:focus {
+  border-color: #d32f2f;
+  background: rgba(211, 47, 47, 0.06);
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.15);
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: #d32f2f;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  transition: color 0.3s;
+  width: auto;
+}
+
+.toggle-password:hover {
+  color: #d32f2f;
+  background: none;
+}
+
+/* ── SUBMIT BUTTON ── */
+.btn-admin-login {
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+
+  background: linear-gradient(135deg, #d32f2f, #b71c1c);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
+
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+}
+
+.btn-admin-login:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(211, 47, 47, 0.5);
+  background: linear-gradient(135deg, #e53935, #c62828);
+}
+
+.btn-admin-login:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-admin-login:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-admin-login i {
+  margin-right: 8px;
+}
+
+/* ── LOADER ── */
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── FOOTER NOTE ── */
+.footer-note {
+  text-align: center;
+  margin-top: 28px;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.footer-note i {
+  margin-right: 5px;
+  font-size: 11px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+
+  .login-card {
+    padding: 36px 24px 28px;
+    border-radius: 20px;
+  }
+
+  .login-card h2 {
+    font-size: 24px;
+  }
+
+  .icon-ring {
+    width: 64px;
+    height: 64px;
+  }
+
+  .icon-ring i {
+    font-size: 28px;
+  }
+
+  .input-wrapper input {
+    padding: 14px 44px 14px 44px;
+    font-size: 14px;
+  }
+
+  .btn-admin-login {
+    padding: 14px;
+    font-size: 15px;
+  }
+}

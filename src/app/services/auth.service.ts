@@ -12,6 +12,9 @@ import {
   setDoc
 } from '@angular/fire/firestore';
 
+// 🔐 Admin email — change this to your admin email
+const ADMIN_EMAIL = 'admin@rgconstruction.com';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,6 +64,22 @@ export class AuthService {
   // LOGOUT
   logout() {
     return signOut(this.auth);
+  }
+
+  // GET CURRENT USER
+  getCurrentUser() {
+    return this.auth.currentUser;
+  }
+
+  // CHECK IF CURRENT USER IS ADMIN
+  isAdmin(): boolean {
+    const user = this.auth.currentUser;
+    return !!user && user.email === ADMIN_EMAIL;
+  }
+
+  // GET ADMIN EMAIL (for display)
+  getAdminEmail(): string {
+    return ADMIN_EMAIL;
   }
 
 }

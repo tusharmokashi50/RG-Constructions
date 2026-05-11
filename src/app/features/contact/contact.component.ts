@@ -60,7 +60,16 @@ export class ContactComponent {
         createdAt: new Date()
       });
   
-      await emailjs.send(
+      // ✅ Show success after Firestore save
+      Swal.fire({
+        title: 'Enquiry sent successfully',
+        icon: 'success',
+        timer: 3000,
+        showConfirmButton: false
+      });
+
+      // 📧 Send email notification (non-blocking)
+      emailjs.send(
         'service_pvxk7ul',
         'template_2n3k597',
         {
@@ -71,14 +80,9 @@ export class ContactComponent {
           description: this.enquiry.description || 'N/A'
         },
         'oFDUXP_wTuYXGM6jq'
-      );
-  
-        Swal.fire({
-          title: 'Enquiry sent successfully',
-          icon: 'success',
-          timer: 3000,
-          showConfirmButton: false
-        });
+      ).catch(emailErr => {
+        console.warn("⚠️ Email notification failed:", emailErr);
+      });
   
       // ✅ RESET FORM COMPLETELY
       form.resetForm();

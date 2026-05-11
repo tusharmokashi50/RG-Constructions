@@ -1,0 +1,358 @@
+<div class="admin-dashboard" [class.sidebar-collapsed]="sidebarCollapsed">
+
+  <!-- ══════════════════════════════════
+       SIDEBAR
+       ══════════════════════════════════ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-icon">
+          <i class="bi bi-buildings-fill"></i>
+        </span>
+        <span class="logo-text" *ngIf="!sidebarCollapsed">
+          <span class="rg">RG</span> Admin
+        </span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a class="nav-item" [class.active]="currentView === 'enquiries'" (click)="setView('enquiries')"
+        id="nav-dashboard">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span *ngIf="!sidebarCollapsed">Dashboard</span>
+      </a>
+
+      <a class="nav-item" [class.active]="currentView === 'users'" (click)="setView('users')" id="nav-users">
+        <i class="bi bi-people-fill"></i>
+        <span *ngIf="!sidebarCollapsed">Users</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" (click)="logout()" id="admin-logout-btn">
+        <i class="bi bi-box-arrow-left"></i>
+        <span *ngIf="!sidebarCollapsed">Logout</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════════════════════════
+       MAIN CONTENT
+       ══════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="sidebar-toggle" (click)="toggleSidebar()" id="toggle-sidebar-btn">
+          <i class="bi bi-list"></i>
+        </button>
+        <div>
+          <h1>{{ currentView === 'enquiries' ? 'Enquiry Dashboard' : 'Registered Users' }}</h1>
+          <p class="top-subtitle">{{ currentView === 'enquiries' ? 'Manage all customer enquiries' : 'Platform
+            registered user base' }}</p>
+        </div>
+      </div>
+      <div class="top-right">
+        <div class="admin-badge">
+          <i class="bi bi-shield-check"></i>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS CARDS -->
+    <section class="stats-grid" *ngIf="currentView === 'enquiries'">
+
+      <div class="stat-card total" (click)="onFilterChange('all')" id="stat-total">
+        <div class="stat-icon">
+          <i class="bi bi-inbox-fill"></i>
+        </div>
+        <div class="stat-info">
+          <h3>{{ totalEnquiries }}</h3>
+          <p>Total Enquiries</p>
+        </div>
+      </div>
+
+      <div class="stat-card new" (click)="onFilterChange('New')" id="stat-new">
+        <div class="stat-icon">
+          <i class="bi bi-bell-fill"></i>
+        </div>
+        <div class="stat-info">
+          <h3>{{ newCount }}</h3>
+          <p>New</p>
+        </div>
+      </div>
+
+      <div class="stat-card new" (click)="onFilterChange('In Progress')" id="stat-progress">
+        <div class="stat-icon">
+          <i class="bi bi-hourglass-split"></i>
+        </div>
+        <div class="stat-info">
+          <h3>{{ inProgressCount }}</h3>
+          <p>In Progress</p>
+        </div>
+      </div>
+
+      <div class="stat-card resolved" (click)="onFilterChange('Resolved')" id="stat-resolved">
+        <div class="stat-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <div class="stat-info">
+          <h3>{{ resolvedCount }}</h3>
+          <p>Resolved</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- USER STATS (Optional) -->
+    <section class="stats-grid" *ngIf="currentView === 'users'">
+      <div class="stat-card total">
+        <div class="stat-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="stat-info">
+          <h3>{{ totalUsers }}</h3>
+          <p>Total Users</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS BAR -->
+    <section class="controls-bar">
+
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text"
+          [placeholder]="currentView === 'enquiries' ? 'Search by name, mobile, location...' : 'Search by name, email...'"
+          [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" id="search-input">
+      </div>
+
+      <div class="filter-tabs" *ngIf="currentView === 'enquiries'">
+        <button [class.active]="filterStatus === 'all'" (click)="onFilterChange('all')" id="filter-all">All</button>
+        <button [class.active]="filterStatus === 'New'" (click)="onFilterChange('New')" id="filter-new">New</button>
+        <button [class.active]="filterStatus === 'In Progress'" (click)="onFilterChange('In Progress')"
+          id="filter-progress">In Progress</button>
+        <button [class.active]="filterStatus === 'Resolved'" (click)="onFilterChange('Resolved')"
+          id="filter-resolved">Resolved</button>
+      </div>
+
+    </section>
+
+    <!-- LOADING SKELETON -->
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="skeleton-row" *ngFor="let i of [1,2,3,4,5]">
+        <div class="skeleton-cell wide"></div>
+        <div class="skeleton-cell"></div>
+        <div class="skeleton-cell"></div>
+        <div class="skeleton-cell narrow"></div>
+      </div>
+    </div>
+
+    <!-- ENQUIRY TABLE -->
+    <section class="table-section" *ngIf="!isLoading && currentView === 'enquiries'">
+
+      <div class="table-header">
+        <span class="th-name">Name</span>
+        <span class="th-mobile">Mobile</span>
+        <span class="th-location">Location</span>
+        <span class="th-type">Type</span>
+        <span class="th-date">Date</span>
+        <span class="th-status">Status</span>
+        <span class="th-actions">Actions</span>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" *ngIf="filteredEnquiries.length === 0">
+        <i class="bi bi-inbox"></i>
+        <h3>No enquiries found</h3>
+        <p>No matching enquiries for the current filter.</p>
+      </div>
+
+      <!-- TABLE ROWS -->
+      <div class="table-row" *ngFor="let enquiry of filteredEnquiries; let i = index"
+        [style.animation-delay]="(i * 0.05) + 's'" (click)="openDetail(enquiry)">
+        <span class="td-name">
+          <div class="name-avatar">{{ enquiry.name?.charAt(0)?.toUpperCase() }}</div>
+          <div>
+            <strong>{{ enquiry.name }}</strong>
+          </div>
+        </span>
+        <span class="td-mobile">
+          <i class="bi bi-phone"></i>
+          {{ enquiry.mobile }}
+        </span>
+        <span class="td-location">
+          <i class="bi bi-geo-alt"></i>
+          {{ enquiry.location || '—' }}
+        </span>
+        <span class="td-type">{{ enquiry.type }}</span>
+        <span class="td-date">{{ formatDate(enquiry.createdAt) }}</span>
+        <span class="td-status">
+          <span class="status-badge" [ngClass]="getStatusClass(enquiry.status)">
+            {{ enquiry.status }}
+          </span>
+        </span>
+        <span class="td-actions" (click)="$event.stopPropagation()">
+          <a [href]="'tel:+91' + enquiry.mobile" class="action-btn call" title="Call">
+            <i class="bi bi-telephone-fill"></i>
+          </a>
+          <a [href]="'https://wa.me/91' + enquiry.mobile" target="_blank" class="action-btn whatsapp" title="WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <button class="action-btn delete" (click)="deleteEnquiry(enquiry.id)" title="Delete">
+            <i class="bi bi-trash3-fill"></i>
+          </button>
+        </span>
+      </div>
+    </section>
+
+    <!-- USERS TABLE -->
+    <section class="table-section" *ngIf="!isLoading && currentView === 'users'">
+      <div class="table-header users-header">
+        <span class="th-name">User</span>
+        <span class="th-email">Email</span>
+        <span class="th-date">Joined Date</span>
+      </div>
+
+      <div class="empty-state" *ngIf="filteredUsers.length === 0">
+        <i class="bi bi-people"></i>
+        <h3>No users found</h3>
+      </div>
+
+      <div class="table-row user-row" *ngFor="let user of filteredUsers; let i = index"
+        [style.animation-delay]="(i * 0.05) + 's'">
+        <span class="td-name">
+          <div class="name-avatar">{{ user.name?.charAt(0)?.toUpperCase() }}</div>
+          <div><strong>{{ user.name }}</strong></div>
+        </span>
+        <span class="td-email">{{ user.email }}</span>
+        <span class="td-date">{{ formatDate(user.createdAt) }}</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════
+       DETAIL SLIDE-OVER PANEL
+       ══════════════════════════════════ -->
+
+  <!-- Overlay -->
+  <div class="detail-overlay" [class.visible]="showDetailPanel" (click)="closeDetail()"></div>
+
+  <!-- Panel -->
+  <div class="detail-panel" [class.open]="showDetailPanel">
+
+    <div class="detail-header" *ngIf="selectedEnquiry">
+      <h2>Enquiry Details</h2>
+      <button class="close-btn" (click)="closeDetail()" id="close-detail-btn">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="detail-body" *ngIf="selectedEnquiry">
+
+      <!-- Person Info -->
+      <div class="detail-person">
+        <div class="person-avatar-lg">
+          {{ selectedEnquiry.name?.charAt(0)?.toUpperCase() }}
+        </div>
+        <div>
+          <h3>{{ selectedEnquiry.name }}</h3>
+          <p class="person-mobile">
+            <i class="bi bi-phone"></i>
+            {{ selectedEnquiry.mobile }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="detail-grid">
+
+        <div class="detail-item">
+          <label>Location</label>
+          <span>
+            <i class="bi bi-geo-alt-fill"></i>
+            {{ selectedEnquiry.location || 'Not specified' }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <label>Enquiry Type</label>
+          <span>
+            <i class="bi bi-tag-fill"></i>
+            {{ selectedEnquiry.type }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <label>Date</label>
+          <span>
+            <i class="bi bi-calendar3"></i>
+            {{ formatDate(selectedEnquiry.createdAt) }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <label>Current Status</label>
+          <span class="status-badge" [ngClass]="getStatusClass(selectedEnquiry.status)">
+            {{ selectedEnquiry.status }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Description -->
+      <div class="detail-description" *ngIf="selectedEnquiry.description">
+        <label>Description</label>
+        <p>{{ selectedEnquiry.description }}</p>
+      </div>
+
+      <!-- Status Actions -->
+      <div class="detail-status-actions">
+        <label>Update Status</label>
+        <div class="status-buttons">
+          <button class="status-btn new" [class.active]="selectedEnquiry.status === 'New'"
+            (click)="updateStatus(selectedEnquiry.id, 'New')" id="status-new-btn">
+            <i class="bi bi-bell-fill"></i> New
+          </button>
+          <button class="status-btn progress" [class.active]="selectedEnquiry.status === 'In Progress'"
+            (click)="updateStatus(selectedEnquiry.id, 'In Progress')" id="status-progress-btn">
+            <i class="bi bi-hourglass-split"></i> In Progress
+          </button>
+          <button class="status-btn resolved" [class.active]="selectedEnquiry.status === 'Resolved'"
+            (click)="updateStatus(selectedEnquiry.id, 'Resolved')" id="status-resolved-btn">
+            <i class="bi bi-check-circle-fill"></i> Resolved
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="detail-quick-actions">
+        <label>Quick Actions</label>
+        <div class="quick-btns">
+          <a [href]="'tel:+91' + selectedEnquiry.mobile" class="quick-btn call">
+            <i class="bi bi-telephone-fill"></i>
+            Call Now
+          </a>
+          <a [href]="'https://wa.me/91' + selectedEnquiry.mobile" target="_blank" class="quick-btn whatsapp">
+            <i class="bi bi-whatsapp"></i>
+            WhatsApp
+          </a>
+          <button class="quick-btn delete" (click)="deleteEnquiry(selectedEnquiry.id)">
+            <i class="bi bi-trash3-fill"></i>
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
