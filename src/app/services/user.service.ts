@@ -29,7 +29,7 @@ export class UserService {
             const usersRef = collection(this.firestore, 'users');
             const q = query(usersRef, orderBy('createdAt', 'desc'));
 
-            const unsubscribe = onSnapshot(q, 
+            const unsubscribe = onSnapshot(q,
                 (snapshot) => {
                     const users: User[] = [];
                     snapshot.forEach(docSnap => {
