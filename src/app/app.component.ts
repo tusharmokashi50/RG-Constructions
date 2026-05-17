@@ -34,11 +34,12 @@ export class AppComponent implements OnInit {
   }
 
   isAuthPage(): boolean {
-
-    return this.router.url === '/login'
-        || this.router.url === '/register'
-        || this.router.url === '/admin-login';
-
+    // Clean URL to handle trailing slashes and query parameters gracefully on deployed environments like Vercel
+    const cleanUrl = this.router.url.split('?')[0].split('#')[0].replace(/\/$/, '');
+    
+    return cleanUrl === '/login'
+        || cleanUrl === '/register'
+        || cleanUrl === '/admin-login';
   }
 
   isProtectedRoute(): boolean {

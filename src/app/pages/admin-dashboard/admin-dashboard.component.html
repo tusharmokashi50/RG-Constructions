@@ -178,7 +178,7 @@
       <div class="table-row" *ngFor="let enquiry of filteredEnquiries; let i = index"
         [style.animation-delay]="(i * 0.05) + 's'" (click)="openDetail(enquiry)">
         <span class="td-name">
-          <div class="name-avatar">{{ enquiry.name?.charAt(0)?.toUpperCase() }}</div>
+          <div class="name-avatar">{{ enquiry.name.charAt(0).toUpperCase() }}</div>
           <div>
             <strong>{{ enquiry.name }}</strong>
           </div>
@@ -229,7 +229,7 @@
       <div class="table-row user-row" *ngFor="let user of filteredUsers; let i = index"
         [style.animation-delay]="(i * 0.05) + 's'">
         <span class="td-name">
-          <div class="name-avatar">{{ user.name?.charAt(0)?.toUpperCase() }}</div>
+          <div class="name-avatar">{{ (user.name?.charAt(0) || '').toUpperCase() }}</div>
           <div><strong>{{ user.name }}</strong></div>
         </span>
         <span class="td-email">{{ user.email }}</span>
@@ -262,7 +262,7 @@
       <!-- Person Info -->
       <div class="detail-person">
         <div class="person-avatar-lg">
-          {{ selectedEnquiry.name?.charAt(0)?.toUpperCase() }}
+          {{ selectedEnquiry.name.charAt(0).toUpperCase() }}
         </div>
         <div>
           <h3>{{ selectedEnquiry.name }}</h3>
