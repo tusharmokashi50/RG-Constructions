@@ -31,6 +31,10 @@ export class LoginComponent {
   isLoading = false;
 
   async login() {
+    if (!this.user.email || !this.user.password) {
+      Swal.fire('Error', 'Please enter email and password', 'error');
+      return;
+    }
 
     this.isLoading = true;
 

@@ -3,8 +3,13 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  user,
+  authState,
+  User
 } from '@angular/fire/auth';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import {
   Firestore,
@@ -20,10 +25,18 @@ const ADMIN_EMAIL = 'admin@rgconstruction.com';
 })
 export class AuthService {
 
+  user$: Observable<User | null>;
+  isAdmin$: Observable<boolean>;
+
   constructor(
     private auth: Auth,
     private firestore: Firestore
-  ) {}
+  ) {
+    this.user$ = user(this.auth);
+    this.isAdmin$ = this.user$.pipe(
+      map(user => !!user && user.email === ADMIN_EMAIL)
+    );
+  }
 
   // REGISTER USER
   async register(

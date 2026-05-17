@@ -3,7 +3,7 @@
   <div class="header-container">
 
     <!-- LOGO -->
-    <a routerLink="/" class="logo">
+    <a routerLink="/home" class="logo">
       <span class="rg">RG</span>
       <span class="name">Construction</span>
     </a>
@@ -11,20 +11,26 @@
     <!-- NAVIGATION -->
     <nav class="nav" [class.active]="menuOpen">
 
-      <a [routerLink]="['/']" fragment="home" (click)="closeMenu()">Home</a>
+      <a [routerLink]="['/home']" fragment="home" (click)="closeMenu()">Home</a>
 
-      <a routerLink="/" fragment="about" (click)="closeMenu()">About</a>
+      <a [routerLink]="['/home']" fragment="about" (click)="closeMenu()">About</a>
 
-      <a [routerLink]="['/']" fragment="services" (click)="closeMenu()">Services</a>
+      <a [routerLink]="['/home']" fragment="services" (click)="closeMenu()">Services</a>
 
-      <a [routerLink]="['/']" fragment="projects" (click)="closeMenu()">Projects</a>
+      <a [routerLink]="['/home']" fragment="projects" (click)="closeMenu()">Projects</a>
 
-      <a [routerLink]="['/']" fragment="contact" (click)="closeMenu()">Contact</a>
+      <a [routerLink]="['/home']" fragment="contact" (click)="closeMenu()">Contact</a>
+
+      <a *ngIf="isAdmin$ | async" routerLink="/admin" (click)="closeMenu()" class="admin-link">Dashboard</a>
+      <a *ngIf="user$ | async" (click)="logout()" class="logout-link">Logout</a>
 
     </nav>
 
     <!-- ACTION BUTTONS -->
     <div class="header-actions">
+
+      <!-- AUTH STATE MOBILE (Optional login link if not logged in) -->
+      <a *ngIf="!(user$ | async)" routerLink="/login" class="login-btn">Login</a>
 
       <!-- CALL -->
       <a href="tel:+919822069294" class="call-btn">

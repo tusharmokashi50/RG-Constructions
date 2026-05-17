@@ -360,7 +360,7 @@
 
 /* Users Table Grid */
 .users-header, .user-row {
-  grid-template-columns: 2fr 2fr 1.5fr !important;
+  grid-template-columns: 1.5fr 2fr 1.2fr 1.2fr !important;
 }
 
 .td-name {

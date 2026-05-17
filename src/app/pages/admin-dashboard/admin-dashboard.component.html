@@ -217,6 +217,7 @@
       <div class="table-header users-header">
         <span class="th-name">User</span>
         <span class="th-email">Email</span>
+        <span class="th-mobile">Mobile</span>
         <span class="th-date">Joined Date</span>
       </div>
 
@@ -232,6 +233,7 @@
           <div><strong>{{ user.name }}</strong></div>
         </span>
         <span class="td-email">{{ user.email }}</span>
+        <span class="td-mobile">{{ user.mobile || '—' }}</span>
         <span class="td-date">{{ formatDate(user.createdAt) }}</span>
       </div>
     </section>
