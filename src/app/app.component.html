@@ -1,6 +1,6 @@
 @if (!isAuthPage()) {
 
-  <app-header></app-header>
+<app-header></app-header>
 
 }
 
@@ -8,36 +8,27 @@
 
 @if (!isAuthPage()) {
 
-  <!-- Floating Buttons -->
-  <div class="fab-container" [class.open]="isFabOpen">
+<!-- Floating Buttons -->
+<div class="fab-container" [class.open]="isFabOpen">
 
-    <!-- Contract Button -->
-    <a
-      href="docs/rg-construction-contract.pdf"
-      target="_blank"
-      class="fab-item"
-      title="View Contract"
-    >
-      📄
-    </a>
+  <!-- Contract Button -->
+  <a href="https://drive.google.com/file/d/1j2YYESSctxlBvXT_7DKNGHk3O6io_cpm/view?usp=drive_link" target="_blank"
+    class="fab-item" title="View Contract">
+    📄
+  </a>
 
-    <!-- WhatsApp Button -->
-    <a
-      href="https://wa.me/919822069294"
-      target="_blank"
-      class="fab-item whatsapp"
-      title="Chat on WhatsApp"
-    >
-      <i class="bi bi-whatsapp"></i>
-    </a>
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/919822069294" target="_blank" class="fab-item whatsapp" title="Chat on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
 
-    <!-- Main FAB -->
-    <button class="fab-main" (click)="toggleFab()">
-      {{ isFabOpen ? '✖' : '+' }}
-    </button>
+  <!-- Main FAB -->
+  <button class="fab-main" (click)="toggleFab()">
+    {{ isFabOpen ? '✖' : '+' }}
+  </button>
 
-  </div>
+</div>
 
-  <app-footer></app-footer>
+<app-footer></app-footer>
 
 }

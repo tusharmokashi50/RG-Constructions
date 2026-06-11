@@ -29,6 +29,11 @@ export class LoginComponent {
   };
 
   isLoading = false;
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   async login() {
     if (!this.user.email || !this.user.password) {

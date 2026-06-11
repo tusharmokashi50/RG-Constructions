@@ -62,6 +62,34 @@
     border-color: #d31b1b;
   }
   
+  .password-group {
+    position: relative;
+  }
+  
+  .password-group input {
+    padding-right: 48px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+    width: auto;
+    transition: color 0.3s;
+  }
+  
+  .toggle-password:hover {
+    color: #d31b1b;
+    background: none;
+  }
+  
   button {
     width: 100%;
   

@@ -22,14 +22,23 @@
         </div>
   
         <!-- PASSWORD -->
-        <div class="input-group">
+        <div class="input-group password-group">
           <input
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
             placeholder="Password"
             [(ngModel)]="user.password"
             name="password"
             required
+            id="user-password-input"
           >
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePassword()"
+            id="toggle-password-btn"
+          >
+            <i [class]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+          </button>
         </div>
   
         <!-- BUTTON -->
